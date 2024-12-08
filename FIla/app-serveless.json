@@ -64,8 +64,8 @@
         "$connections": {
             "value": {
                 "servicebus-2": {
-                    "id": "/subscriptions/6a7ada73-7063-4aeb-bd82-81ab4838584f/providers/Microsoft.Web/locations/eastus2/managedApis/servicebus",
-                    "connectionId": "/subscriptions/6a7ada73-7063-4aeb-bd82-81ab4838584f/resourceGroups/AZ-104/providers/Microsoft.Web/connections/servicebus-2",
+                    "id": "/subscriptions/subsid/providers/Microsoft.Web/locations/eastus2/managedApis/servicebus",
+                    "connectionId": "/subscriptions/subsid/resourceGroups/AZ-104/providers/Microsoft.Web/connections/servicebus-2",
                     "connectionName": "servicebus-2"
                 }
             }
