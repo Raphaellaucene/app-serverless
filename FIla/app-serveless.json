@@ -1,0 +1,74 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "contentVersion": "1.0.0.0",
+        "triggers": {
+            "When_a_HTTP_request_is_received": {
+                "type": "Request",
+                "kind": "Http",
+                "inputs": {
+                    "method": "POST",
+                    "schema": {
+                        "name": "",
+                        "idade": 1
+                    }
+                }
+            }
+        },
+        "actions": {
+            "Send_message": {
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['servicebus-2']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "body": {
+                        "SessionId": "1",
+                        "ContentData": "@base64(triggerBody())"
+                    },
+                    "path": "/@{encodeURIComponent(encodeURIComponent('logicapp'))}/messages",
+                    "queries": {
+                        "systemProperties": "None"
+                    }
+                },
+                "runAfter": {}
+            },
+            "Response": {
+                "type": "Response",
+                "kind": "Http",
+                "inputs": {
+                    "statusCode": 201,
+                    "body": {
+                        "message": "Item incluido na fila"
+                    }
+                },
+                "runAfter": {
+                    "Send_message": [
+                        "SUCCEEDED"
+                    ]
+                }
+            }
+        },
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "type": "Object",
+                "defaultValue": {}
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "servicebus-2": {
+                    "id": "/subscriptions/6a7ada73-7063-4aeb-bd82-81ab4838584f/providers/Microsoft.Web/locations/eastus2/managedApis/servicebus",
+                    "connectionId": "/subscriptions/6a7ada73-7063-4aeb-bd82-81ab4838584f/resourceGroups/AZ-104/providers/Microsoft.Web/connections/servicebus-2",
+                    "connectionName": "servicebus-2"
+                }
+            }
+        }
+    }
+}
